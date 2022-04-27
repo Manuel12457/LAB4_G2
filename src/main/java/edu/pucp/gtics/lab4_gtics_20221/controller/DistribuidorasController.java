@@ -48,7 +48,7 @@ public class DistribuidorasController {
     }
 
     @PostMapping("/guardar")
-    public String guardarDistribuidora( @ModelAttribute("distribuidora") Distribuidoras distribuidoras, RedirectAttributes redirectAttributes){
+    public String guardarDistribuidora( @ModelAttribute("distribuidora") @Valid Distribuidoras distribuidoras, RedirectAttributes redirectAttributes){
         distribuidorasRepository.save(distribuidoras);
         return "redirect:/distribuidoras/lista";
     }
