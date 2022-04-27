@@ -23,23 +23,23 @@
                     <div class="form-group">
                         <label for="genero">Género</label>
                         <select id="genero" class="form-control" th:field="*{genero}">
-                            <option th:each="genero : ${generos}" th:value="${genero.idgenero}"
-                            th:text="${genero.nombre}">Choose...</option>
+                            <option th:each="generoEach : ${generos}" th:value="${generoEach.idgenero}"
+                            th:text="${generoEach.nombre}">Choose...</option>
                             <option>...</option>
                         </select>
                     </div>
                     <div class="form-group">
                         <label for="plataforma">Plataforma</label>
                         <select id="plataforma" th:field="*{plataforma}" class="form-control" >
-                            <option th:each="plataforma : ${plataformas}" th:value="${plataforma.idplataforma}"
-                            th:text="${plataforma.nombre}">Choose...</option>
+                            <option th:each="plataformaEach : ${plataformas}" th:value="${plataformaEach.idplataforma}"
+                            th:text="${plataformaEach.nombre}">Choose...</option>
                         </select>
                     </div>
                     <div class="form-group">
                         <label for="distribuidora">Distribuidora</label>
                         <select id="distribuidora" class="form-control" th:field="${distribuidoras}">
-                            <option  th:each="distribuidora : ${distribuidoras}" th:value="${distribuidora.iddistribuidora}"
-                            th:text="${distribuidora.nombre}">Choose...</option>
+                            <option  th:each="distribuidoraEach : ${distribuidoras}" th:value="${distribuidoraEach.iddistribuidora}"
+                            th:text="${distribuidoraEach.nombre}">Choose...</option>
                         </select>
                     </div>
                     <div class="form-group">
