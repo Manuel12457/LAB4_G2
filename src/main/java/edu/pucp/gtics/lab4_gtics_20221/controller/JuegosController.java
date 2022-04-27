@@ -34,8 +34,9 @@ public class JuegosController {
     UserRepository userRepository;
 
     @GetMapping(value = {"", "/","/juegos/lista"})
-    public String listaJuegos (){
-
+    public String listaJuegos (Model model){
+        model.addAttribute("listaJuegos", juegosRepository.listaJuegosDescentendementePorPrecio());
+        return "/juegos/lista";
     }
 
     public String vistaJuegos ( ){
