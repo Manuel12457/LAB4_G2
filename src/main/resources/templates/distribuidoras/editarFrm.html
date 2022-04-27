@@ -12,7 +12,8 @@
             <h2 th:text="${distribuidora.iddistribuidora==0 ? 'Nueva Distribuidora' : 'Editar Distribuidora'}"></h2>
         </div>
         <div class="container-fluid">
-                <form method="POST" th:action="@{'guardar/distribuidoras'}" class="row g-3" th:object="${distribuidora}">
+                <form method="POST" th:action="@{'distribuidoras/guardar'}" class="row g-3" th:object="${distribuidora}">
+                    <input hidden th:field="*{iddistribuidora}">
 
                     <div class="form-group">
                         <label >Nombre</label>
