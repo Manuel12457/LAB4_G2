@@ -15,7 +15,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
-
+@Controller
 @RequestMapping("/distribuidoras")
 
 public class DistribuidorasController {
@@ -26,22 +26,31 @@ public class DistribuidorasController {
     @Autowired
     PaisesRepository paisesRepository;
 
-    @GetMapping(value = {"/lista"})
+   /* @GetMapping(value = {"/lista"})
     public String listaDistribuidoras ( ){
 
+   }*/
+
+    @GetMapping("/editar")
+    public String editarDistribuidoras(@RequestParam("id")int id, Model model, @ModelAttribute("distribuidora") Distribuidoras distribuidoras){
+        Optional<Distribuidoras> optDist = distribuidorasRepository.findById(id);
+        if(optDist.isEmpty()){
+            return "redirect:/distribuidoras/lista";}
+            model.addAttribute("distribuidora", optDist.get());
+            model.addAttribute("listaSedes", paisesRepository.findAll());
+            return "distribuidoras/editarFrm";
     }
 
-
-    public String editarDistribuidoras(){
-
+   @GetMapping("/nuevo")
+   public String nuevaDistribuidora(@ModelAttribute ("distribuidora") Distribuidoras distribuidoras, Model model){
+        model.addAttribute("listaSedes", paisesRepository.findAll());
+       return "distribuidoras/editarFrm";
     }
 
-    public String nuevaDistribuidora( ){
-
-    }
-
-    public String guardarDistribuidora( ){
-
+    @PostMapping("/guardar")
+    public String guardarDistribuidora( Distribuidoras distribuidoras){
+        distribuidorasRepository.save(distribuidoras);
+        return "redirect:/distribuidoras/lista";
     }
 
     @GetMapping("/borrar")
