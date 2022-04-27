@@ -2,15 +2,19 @@ package edu.pucp.gtics.lab4_gtics_20221.controller;
 
 import edu.pucp.gtics.lab4_gtics_20221.entity.*;
 import edu.pucp.gtics.lab4_gtics_20221.repository.*;
+import org.hibernate.mapping.Property;
+import org.springframework.beans.PropertyEditorRegistrar;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.beans.PropertyEditorSupport;
 import java.util.List;
 import java.util.Optional;
 
@@ -64,13 +68,13 @@ public class JuegosController {
         return "juegos/editarFrm";
     }
     @PostMapping("/juegos/guardar")
-    public String guardarJuegos(@ModelAttribute("juego") Juegos juego, BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model){
+    public String guardarJuegos(@ModelAttribute("juego") @Valid Juegos juego, BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model){
         String msg;
         if (bindingResult.hasErrors()) {
             model.addAttribute("plataformas",plataformasRepository.findAll());
             model.addAttribute("generos",generosRepository.findAll());
             model.addAttribute("distribuidoras",distribuidorasRepository.findAll());
-
+            System.out.println(bindingResult.hasErrors());
             return "juegos/editarFrm";
         } else {
             if(juegosRepository.findById(juego.getIdjuego()).isPresent()){
@@ -85,10 +89,11 @@ public class JuegosController {
     }
 
     @GetMapping("/juegos/borrar")
-    public String borrarDistribuidora(@RequestParam("id") int id){
+    public String borrarDistribuidora(@RequestParam("id") int id, RedirectAttributes redirectAttributes){
         Optional<Juegos> opt = juegosRepository.findById(id);
         if (opt.isPresent()) {
             juegosRepository.deleteById(id);
+            redirectAttributes.addFlashAttribute("msg", "Juego eliminado exitosamente");
         }
         return "redirect:/juegos/lista";
     }

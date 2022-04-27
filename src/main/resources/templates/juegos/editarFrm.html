@@ -12,38 +12,47 @@
             </div>
             <div class="container-fluid">
                 <form method="POST" class="row g-3" th:action="@{'/juegos/guardar'}" th:object="${juego}">
-                    <input hidden th:field="*{idjuego}">
+                    <input hidden th:field="*{idjuego}" value="">
                     <div class="form-group">
                         <label>Nombre</label>
-                        <input class="form-control" th:field="*{nombre}">
+                        <input class="form-control" th:field="*{nombre}" th:classappend="${#fields.hasErrors('nombre')? 'is-invalid':''}">
+                        <div class="invalid-feedback" th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}"></div>
                     </div>
                     <div class="form-group">
                         <label>Descripción</label>
-                        <input class="form-control" th:field="*{descripcion}">
+                        <input class="form-control" th:field="*{descripcion}" th:classappend="${#fields.hasErrors('descripcion')? 'is-invalid' : ''}">
+                        <div class="invalid-feedback" th:if="${#fields.hasErrors('descripcion')}" th:errors="*{descripcion}"></div>
                     </div>
                     <div class="form-group">
                         <label for="genero">Género</label>
-                        <select id="genero" class="form-control" th:field="*{genero}">
+                        <select id="genero" class="form-control" th:field="*{genero}" th:classappend="${#fields.hasErrors('genero')? 'is-invalid' : ''}">
+                            <option th:selected="${juego.idjuego==0}" value="" >- Seleccione -</option>
                             <option th:each="generoEach : ${generos}" th:value="${generoEach.idgenero}" th:text="${generoEach.nombre}">Choose...</option>
                         </select>
+                        <div class="invalid-feedback" th:if="${#fields.hasErrors('genero')}" th:errors="*{genero}"></div>
                     </div>
                     <div class="form-group">
                         <label for="plataforma">Plataforma</label>
-                        <select id="plataforma" th:field="*{plataforma}" class="form-control" >
+                        <select id="plataforma" th:field="*{plataforma}" class="form-control" th:classappend="${#fields.hasErrors('plataforma')? 'is-invalid' : ''}">
+                            <option th:selected="${juego.idjuego==0}" value="">- Seleccione -</option>
                             <option th:each="plataformaEach : ${plataformas}" th:value="${plataformaEach.idplataforma}"
                             th:text="${plataformaEach.nombre}">Choose...</option>
                         </select>
+                        <div class="invalid-feedback" th:if="${#fields.hasErrors('plataforma')}" th:errors="*{plataforma}"></div>
                     </div>
                     <div class="form-group">
                         <label for="distribuidora">Distribuidora</label>
-                        <select id="distribuidora" class="form-control" th:field="*{distribuidora}">
+                        <select id="distribuidora" class="form-control" th:field="*{distribuidora}" th:classappend="${#fields.hasErrors('distribuidora')? 'is-invalid' : ''}">
+                            <option th:selected="${juego.idjuego==0}" value="">- Seleccione -</option>
                             <option  th:each="distribuidoraEach : ${distribuidoras}" th:value="${distribuidoraEach.iddistribuidora}"
                             th:text="${distribuidoraEach.nombre}">Choose...</option>
                         </select>
+                        <div class="invalid-feedback" th:if="${#fields.hasErrors('distribuidora')}" th:errors="*{distribuidora}"></div>
+
                     </div>
                     <div class="form-group">
                         <label>Imagen URL</label>
-                        <input class="form-control" th:field="*{image}">
+                        <input class="form-control" th:field="*{image}" >
                     </div>
                     <div class="form-group">
                         <label>Precio</label>
@@ -51,7 +60,8 @@
                             <div class="input-group-prepend">
                                 <div class="input-group-text">S/</div>
                             </div>
-                            <input class="form-control" th:field="*{precio}">
+                            <input class="form-control" th:field="*{precio}" th:classappend="${#fields.hasErrors('precio')? 'is-invalid' : ''}">
+                            <div class="invalid-feedback" th:if="${#fields.hasErrors('precio')}" th:errors="*{precio}"></div>
                         </div>
                     </div>
 
