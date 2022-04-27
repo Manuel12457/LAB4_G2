@@ -11,27 +11,31 @@ public class Juegos {
     @Id
     private int idjuego;
 
+    @Size(min = 3, max = 45, message = "Debe contener entre 3 y 45 caracteres")
     private String nombre;
 
+    @Size(min = 3, max = 400, message = "Debe contener entre 3 y 400 caracteres")
     private String descripcion;
 
+    @Min(value = 10, message = "Debe ser un número, mínimo 10 y máximo 500")
+    @Max(value = 500, message = "Debe ser un número, mínimo 10 y máximo 500")
     private double precio;
 
     private String image;
 
     @ManyToOne
     @JoinColumn(name = "idplataforma")
-
+    @NotEmpty
     private Plataformas plataforma;
 
     @ManyToOne
     @JoinColumn(name = "iddistribuidora")
-
+    @NotEmpty
     private Distribuidoras distribuidora;
 
     @ManyToOne
     @JoinColumn(name = "idgenero")
-
+    @NotEmpty
     private Generos genero;
 
     public int getIdjuego() {
