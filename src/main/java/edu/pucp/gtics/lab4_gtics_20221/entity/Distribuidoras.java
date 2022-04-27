@@ -22,7 +22,7 @@ public class Distribuidoras {
     private String descripcion;
 
     @Size(min = 3, max = 198, message = "Debe contener entre 3 y 198 caracteres")
-    @URL
+    @URL(protocol = "https")
     private String web;
 
     @Digits(integer = 10, fraction = 0)
@@ -32,7 +32,7 @@ public class Distribuidoras {
 
     @ManyToOne
     @JoinColumn(name = "idsede")
-    @NotEmpty
+    @NotNull
     private Paises pais;
 
     public int getIddistribuidora() {

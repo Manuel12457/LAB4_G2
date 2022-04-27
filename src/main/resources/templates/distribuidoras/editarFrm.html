@@ -12,36 +12,40 @@
             <h2 th:text="${distribuidora.iddistribuidora==0 ? 'Nueva Distribuidora' : 'Editar Distribuidora'}"></h2>
         </div>
         <div class="container-fluid">
-                <form method="POST" th:action="@{'distribuidoras/guardar'}" class="row g-3" th:object="${distribuidora}">
+                <form method="POST" th:action="@{'/distribuidoras/guardar'}" class="row g-3" th:object="${distribuidora}">
                     <input hidden th:field="*{iddistribuidora}">
 
                     <div class="form-group">
                         <label >Nombre</label>
-                        <input class="form-control" th:field="*{nombre}">
+                        <input class="form-control" th:field="*{nombre}" th:classappend="${#fields.hasErrors('nombre')? 'is-invalid':''}">
+                        <div class="invalid-feedback" th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}"></div>
 
                     </div>
                     <div class="form-group">
-                        <label >Descripción</label>
-                        <input class="form-control" th:field="*{descripcion}">
-
+                        <label>Descripción</label>
+                        <textarea class="form-control" th:field="*{descripcion}" th:classappend="${#fields.hasErrors('descripcion')? 'is-invalid' : ''}"></textarea>
+                        <div class="invalid-feedback" th:if="${#fields.hasErrors('descripcion')}" th:errors="*{descripcion}"></div>
                     </div>
                     <div class="form-group">
                         <label >URL Web</label>
-                        <input class="form-control" th:field="*{web}">
+                        <input class="form-control" th:field="*{web}" th:classappend="${#fields.hasErrors('web')? 'is-invalid' : ''}">
+                        <div class="invalid-feedback" th:if="${#fields.hasErrors('web')}" th:errors="*{web}"></div>
                     </div>
 
                     <div class="form-group">
                         <label >Fundación</label>
-                        <input class="form-control" th:field="*{fundacion}">
+                        <input class="form-control" th:field="*{fundacion}" th:classappend="${#fields.hasErrors('fundacion')? 'is-invalid' : ''}">
+                        <div class="invalid-feedback" th:if="${#fields.hasErrors('fundacion')}" th:errors="*{fundacion}"></div>
 
                     </div>
                     <div class="form-group">
                         <label for="sede">Sede</label>
-                        <select id="sede" th:field="*{pais}" class="form-control" >
+                        <select id="sede" th:field="*{pais}" class="form-control" th:classappend="${#fields.hasErrors('pais')? 'is-invalid' : ''}">
+                            <option th:selected="${distribuidora.iddistribuidora==0}" value="">- Seleccione -</option>
                             <option th:each="paisEach : ${listaSedes}" th:value="${paisEach.idpais}"
                                     th:text="${paisEach.nombre}">Choose...</option>
                         </select>
-
+                        <div class="invalid-feedback" th:if="${#fields.hasErrors('pais')}" th:errors="*{pais}"></div>
                     </div>
 
                     <div class="form-group">

@@ -20,7 +20,7 @@
                     </div>
                     <div class="form-group">
                         <label>Descripción</label>
-                        <input class="form-control" th:field="*{descripcion}" th:classappend="${#fields.hasErrors('descripcion')? 'is-invalid' : ''}">
+                        <textarea class="form-control" th:field="*{descripcion}" th:classappend="${#fields.hasErrors('descripcion')? 'is-invalid' : ''}"></textarea>
                         <div class="invalid-feedback" th:if="${#fields.hasErrors('descripcion')}" th:errors="*{descripcion}"></div>
                     </div>
                     <div class="form-group">
