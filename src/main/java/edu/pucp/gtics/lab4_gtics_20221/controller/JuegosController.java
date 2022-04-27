@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Optional;
 
 
-
+@Controller
 public class JuegosController {
 
     @Autowired
@@ -35,23 +35,43 @@ public class JuegosController {
 
     @GetMapping(value = {"", "/","/juegos/lista"})
     public String listaJuegos (){
-
+        return "";
     }
 
     public String vistaJuegos ( ){
-
+        return "";
     }
 
-    public String nuevoJuegos( ){
+    @GetMapping("/juegos/nuevo")
+    public String nuevoJuegos(@ModelAttribute("juego") Juegos juego, Model model){
+        model.addAttribute("plataformas",plataformasRepository.findAll());
+        model.addAttribute("generos",generosRepository.findAll());
+        model.addAttribute("distribuidoras",distribuidorasRepository.findAll());
 
+        return "juegos/editarFrm";
     }
 
-    public String editarJuegos( ){
+    @GetMapping("/juegos/editar")
+    public String editarJuegos( @RequestParam("id") int id, Model model, @ModelAttribute("juego") Juegos juego){
+        Optional<Juegos> optionalJuegos = juegosRepository.findById(id);
+        if(optionalJuegos.isEmpty()){return "redirect:/juegos";}
+        model.addAttribute("juego",optionalJuegos.get());
+        model.addAttribute("plataformas",plataformasRepository.findAll());
+        model.addAttribute("generos",generosRepository.findAll());
+        model.addAttribute("distribuidoras",distribuidorasRepository.findAll());
 
+        return "juegos/editarFrm";
     }
-
-    public String guardarJuegos( ){
-
+    @GetMapping("/juegos/guardar")
+    public String guardarJuegos(@Valid Juegos juego, RedirectAttributes redirectAttributes){
+        String msg;
+        if(juegosRepository.findById(juego.getIdjuego()).isPresent()){
+            msg="Juego actualizado exitosamente";
+        } else {
+            msg="Juego creado exitosamente";
+        }
+        redirectAttributes.addFlashAttribute("msg",msg);
+        return "redirect:/juegos";
     }
 
     @GetMapping("/juegos/borrar")
