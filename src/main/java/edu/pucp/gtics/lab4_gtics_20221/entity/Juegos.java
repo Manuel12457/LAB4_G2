@@ -7,7 +7,6 @@ import javax.validation.constraints.*;
 @Entity
 @Table(name = "juegos")
 public class Juegos {
-
     @Id
     private int idjuego;
 
@@ -25,17 +24,17 @@ public class Juegos {
 
     @ManyToOne
     @JoinColumn(name = "idplataforma")
-    @NotEmpty
+    @NotNull
     private Plataformas plataforma;
 
     @ManyToOne
     @JoinColumn(name = "iddistribuidora")
-    @NotEmpty
+    @NotNull
     private Distribuidoras distribuidora;
 
     @ManyToOne
     @JoinColumn(name = "idgenero")
-    @NotEmpty
+    @NotNull
     private Generos genero;
 
     public int getIdjuego() {
