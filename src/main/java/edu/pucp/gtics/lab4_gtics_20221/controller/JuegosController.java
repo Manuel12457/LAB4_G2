@@ -55,7 +55,7 @@ public class JuegosController {
     @GetMapping("/juegos/editar")
     public String editarJuegos(@RequestParam("id") int id, Model model, @ModelAttribute("juego") Juegos juego){
         Optional<Juegos> optionalJuegos = juegosRepository.findById(id);
-        if(optionalJuegos.isPresent()){return "redirect:/juegos";}
+        if(optionalJuegos.isEmpty()){return "redirect:/juegos/lista";}
         model.addAttribute("juego",optionalJuegos.get());
         model.addAttribute("plataformas",plataformasRepository.findAll());
         model.addAttribute("generos",generosRepository.findAll());
@@ -63,10 +63,9 @@ public class JuegosController {
 
         return "juegos/editarFrm";
     }
-    @GetMapping("/juegos/guardar")
-    public String guardarJuegos(@ModelAttribute("juego") @Valid Juegos juego, BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model){
+    @PostMapping("/juegos/guardar")
+    public String guardarJuegos(@ModelAttribute("juego") Juegos juego, BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model){
         String msg;
-
         if (bindingResult.hasErrors()) {
             model.addAttribute("plataformas",plataformasRepository.findAll());
             model.addAttribute("generos",generosRepository.findAll());
@@ -79,8 +78,9 @@ public class JuegosController {
             } else {
                 msg="Juego creado exitosamente";
             }
+            juegosRepository.save(juego);
             redirectAttributes.addFlashAttribute("msg",msg);
-            return "redirect:/juegos";
+            return "redirect:/juegos/lista";
         }
     }
 

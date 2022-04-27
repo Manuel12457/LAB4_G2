@@ -57,7 +57,7 @@
 
                     <div class="form-group">
                         <a th:href="@{/juegos/lista}" class="btn btn-danger">Cancelar</a>
-                        <button type="submit" class="btn btn-primary" th:text="${id==0? 'Registrar': 'Actualizar'}">Reg/act</button>
+                        <button type="submit" class="btn btn-primary" th:text="${juego.idjuego==0? 'Registrar': 'Actualizar'}">Reg/act</button>
                     </div>
                 </form>
             </div>
