@@ -7,6 +7,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.DataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -64,15 +65,16 @@ public class JuegosController {
         return "juegos/editarFrm";
     }
     @PostMapping("/juegos/guardar")
-    public String guardarJuegos(@ModelAttribute("juego") @Valid Juegos juego, RedirectAttributes redirectAttributes){
+    public String guardarJuegos(@ModelAttribute("juego") Juegos juego, RedirectAttributes redirectAttributes){
         String msg;
         if(juegosRepository.findById(juego.getIdjuego()).isPresent()){
             msg="Juego actualizado exitosamente";
         } else {
             msg="Juego creado exitosamente";
         }
+        juegosRepository.save(juego);
         redirectAttributes.addFlashAttribute("msg",msg);
-        return "redirect:/juegos";
+        return "redirect:/juegos/lista";
     }
 
     @GetMapping("/juegos/borrar")
