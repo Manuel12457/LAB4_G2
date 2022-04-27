@@ -63,8 +63,8 @@ public class JuegosController {
 
         return "juegos/editarFrm";
     }
-    @GetMapping("/juegos/guardar")
-    public String guardarJuegos(@Valid Juegos juego, RedirectAttributes redirectAttributes){
+    @PostMapping("/juegos/guardar")
+    public String guardarJuegos(@ModelAttribute("juego") @Valid Juegos juego, RedirectAttributes redirectAttributes){
         String msg;
         if(juegosRepository.findById(juego.getIdjuego()).isPresent()){
             msg="Juego actualizado exitosamente";
