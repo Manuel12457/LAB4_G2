@@ -53,9 +53,9 @@ public class JuegosController {
     }
 
     @GetMapping("/juegos/editar")
-    public String editarJuegos( @RequestParam("id") int id, Model model, @ModelAttribute("juego") Juegos juego){
+    public String editarJuegos(@RequestParam("id") int id, Model model, @ModelAttribute("juego") Juegos juego){
         Optional<Juegos> optionalJuegos = juegosRepository.findById(id);
-        if(optionalJuegos.isEmpty()){return "redirect:/juegos";}
+        if(optionalJuegos.isPresent()){return "redirect:/juegos";}
         model.addAttribute("juego",optionalJuegos.get());
         model.addAttribute("plataformas",plataformasRepository.findAll());
         model.addAttribute("generos",generosRepository.findAll());
@@ -64,15 +64,24 @@ public class JuegosController {
         return "juegos/editarFrm";
     }
     @GetMapping("/juegos/guardar")
-    public String guardarJuegos(@Valid Juegos juego, RedirectAttributes redirectAttributes){
+    public String guardarJuegos(@ModelAttribute("juego") @Valid Juegos juego, BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model){
         String msg;
-        if(juegosRepository.findById(juego.getIdjuego()).isPresent()){
-            msg="Juego actualizado exitosamente";
+
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("plataformas",plataformasRepository.findAll());
+            model.addAttribute("generos",generosRepository.findAll());
+            model.addAttribute("distribuidoras",distribuidorasRepository.findAll());
+
+            return "juegos/editarFrm";
         } else {
-            msg="Juego creado exitosamente";
+            if(juegosRepository.findById(juego.getIdjuego()).isPresent()){
+                msg="Juego actualizado exitosamente";
+            } else {
+                msg="Juego creado exitosamente";
+            }
+            redirectAttributes.addFlashAttribute("msg",msg);
+            return "redirect:/juegos";
         }
-        redirectAttributes.addFlashAttribute("msg",msg);
-        return "redirect:/juegos";
     }
 
     @GetMapping("/juegos/borrar")
