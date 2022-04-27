@@ -11,7 +11,8 @@
                 <h2 th:text="${juego.idjuego==0? 'Nuevo juego': 'Editar juego'}"></h2>
             </div>
             <div class="container-fluid">
-                <form method="POST" class="row g-3" th:action="@{'/save/juegos'}" th:object="${juego}">
+                <form method="POST" class="row g-3" th:action="@{'/juegos/guardar'}" th:object="${juego}">
+                    <input hidden th:field="*{idjuego}">
                     <div class="form-group">
                         <label>Nombre</label>
                         <input class="form-control" th:field="*{nombre}">
@@ -23,9 +24,7 @@
                     <div class="form-group">
                         <label for="genero">Género</label>
                         <select id="genero" class="form-control" th:field="*{genero}">
-                            <option th:each="generoEach : ${generos}" th:value="${generoEach.idgenero}"
-                            th:text="${generoEach.nombre}">Choose...</option>
-                            <option>...</option>
+                            <option th:each="generoEach : ${generos}" th:value="${generoEach.idgenero}" th:text="${generoEach.nombre}">Choose...</option>
                         </select>
                     </div>
                     <div class="form-group">
@@ -37,7 +36,7 @@
                     </div>
                     <div class="form-group">
                         <label for="distribuidora">Distribuidora</label>
-                        <select id="distribuidora" class="form-control" th:field="${distribuidoras}">
+                        <select id="distribuidora" class="form-control" th:field="*{distribuidora}">
                             <option  th:each="distribuidoraEach : ${distribuidoras}" th:value="${distribuidoraEach.iddistribuidora}"
                             th:text="${distribuidoraEach.nombre}">Choose...</option>
                         </select>
