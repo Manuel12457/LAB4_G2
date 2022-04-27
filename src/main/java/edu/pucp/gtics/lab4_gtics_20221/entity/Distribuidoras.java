@@ -22,12 +22,12 @@ public class Distribuidoras {
     private String descripcion;
 
     @Size(min = 3, max = 198, message = "Debe contener entre 3 y 198 caracteres")
-    @URL(protocol = "https")
+    @URL(protocol = "http", message = "Debe ser una url válida")
     private String web;
 
     @Digits(integer = 10, fraction = 0)
-    @Max(value = 2100)
-    @Min(value = 1800)
+    @Max(value = 2100, message = "Debe ser menor que o igual a 2100")
+    @Min(value = 1800, message = "Debe ser mayor que o igual a 1800")
     private int fundacion = 1870;
 
     @ManyToOne
